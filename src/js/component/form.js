@@ -25,29 +25,31 @@ const Form = () => {
 	return (
 		<>
 			<h1 className="display-4">To do list</h1>
-			<form action="" onSubmit={handleSubmit}>
-				<input
-					type="text"
-					placeholder="To Do"
-					className="form-control"
-					value={toDo}
-					onChange={handleOnChange}
-					onKeyPress={handlePressKey}
-				/>
-			</form>
-			<ul className="list-group list-group-flush">
-				{list.map(item => {
-					return (
-						<li key={item.id} className="list-group-item ">
-							<>{item.content}</>
-							<span onClick={() => handleRemove(item.id)}>
-								<i className="fas fa-times"></i>
-							</span>
-						</li>
-					);
-				})}
-			</ul>
-			<footer>{list.length} item left</footer>
+			<div className="prueba">
+				<form action="" onSubmit={handleSubmit}>
+					<input
+						type="text"
+						placeholder="To Do"
+						className="form-control"
+						value={toDo}
+						onChange={handleOnChange}
+						onKeyPress={handlePressKey}
+					/>
+				</form>
+				<ul className="list-group list-group-flush">
+					{list.map(item => {
+						return (
+							<li key={item.id} className="list-group-item ">
+								<>{item.content}</>
+								<span onClick={() => handleRemove(item.id)}>
+									<i className="fas fa-times"></i>
+								</span>
+							</li>
+						);
+					})}
+				</ul>
+				<footer>{list.length} item left</footer>
+			</div>
 		</>
 	);
 };
