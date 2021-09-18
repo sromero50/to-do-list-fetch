@@ -1,58 +1,12 @@
-import React, { useState } from "react";
-
+import React from "react";
+import Form from "./form";
 //include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	const [toDo, setToDo] = useState("");
-	const [list, setList] = useState([]);
-
-	const handleRemove = id => {
-		const newList = list.filter(item => item.id !== id);
-		setList(newList);
-	};
-	const handleSubmit = e => {
-		e.preventDefault();
-		setToDo("");
-	};
-
-	const handleOnChange = e => {
-		setToDo(e.target.value);
-	};
-
-	const handlePressKey = e => {
-		if (e.key === "Enter") {
-			setList([...list, { id: list.length + 1, content: toDo }]);
-		}
-	};
-
 	return (
 		<div className="mt-5 container box form-group">
-			<h1 className="display-4">To do list</h1>
-			<form action="" onSubmit={handleSubmit}>
-				<input
-					type="text"
-					placeholder="To Do"
-					className="form-control"
-					value={toDo}
-					onChange={handleOnChange}
-					onKeyPress={handlePressKey}
-				/>
-			</form>
-			<ul className="list-group list-group-flush">
-				{list.map(item => {
-					return (
-						<li key={item.id} className="list-group-item ">
-							<>{item.content}</>
-							<span onClick={() => handleRemove(item.id)}>
-								<i className="fas fa-times"></i>
-							</span>
-						</li>
-					);
-				})}
-			</ul>
-			<footer>{list.length} item left</footer>
+			<Form />
 		</div>
 	);
 };
