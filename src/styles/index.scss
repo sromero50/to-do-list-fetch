@@ -11,3 +11,58 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+body{
+    background-color: #8c7a8c;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+footer{
+    color: 	#333333;
+    padding: 5px;
+    height:30px;
+    font-size: 15px;
+    border-radius: 0px 0px 5px 5px;
+    background-color: 	#D3D3D3;
+}
+
+.box{
+    width:400px;
+}
+
+li {
+	background: #fff;
+	padding-left: 10px;
+	line-height: 2em;
+	margin: 0;
+	color: #666;
+}
+
+li:nth-child(2n) {
+	background: #f7f7f7;
+}
+
+
+input:focus{
+        background: white;
+        border: 2px solid #f3c4ff;
+        outline: none;
+        transition: 0.1s;
+}
+
+span {
+	height: 35px;
+	width: 0;
+	margin-right: 10px;
+	margin-left: -10px;
+	text-align: center;
+	color: 	#333333;
+	opacity: 0;
+	transition: 0.2s linear;
+    float: right;
+}
+
+li:hover span {
+	opacity: 1;
+	width: 40px;
+    float:right;
+}
