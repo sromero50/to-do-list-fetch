@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Form = () => {
 	const [toDo, setToDo] = useState("");
 	const [list, setList] = useState([]);
 
+	//////////////////// handlers /////////////////////////////////////////////
 	const handleSubmit = e => {
 		e.preventDefault();
 		setToDo("");
@@ -12,15 +13,100 @@ const Form = () => {
 		setToDo(e.target.value);
 	};
 
-	const handlePressKey = e => {
-		if (e.key === "Enter") {
-			setList([...list, { id: list.length + 1, content: toDo }]);
+	const handleRemove = label => {
+		const newList = list.filter(item => item.label !== label);
+
+		if (list.length === 0) {
+			deleteAll();
 		}
-	};
-	const handleRemove = id => {
-		const newList = list.filter(item => item.id !== id);
+
 		setList(newList);
 	};
+
+	const handlePressKey = e => {
+		if (e.key === "Enter") {
+			setList([
+				...list,
+				{ id: list.length + 1, label: toDo, done: false }
+			]);
+		}
+	};
+	/////////////////////// fetch api ///////////////////////////////////////////
+	const url = "https://assets.breatheco.de/apis/fake/todos/user/sromero50";
+
+	const create = () => {
+		fetch(url, {
+			method: "POST",
+			body: JSON.stringify([]),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(resp => {
+				console.log(resp.ok);
+				console.log(resp.status);
+				console.log(resp.text());
+				return resp.json();
+			})
+			.then(() => {
+				getList();
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	const getList = () => {
+		fetch(url)
+			.then(res => res.json())
+			.then(list => {
+				setList(list);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const update = () => {
+		fetch(url, {
+			method: "PUT",
+			body: JSON.stringify(list),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(resp => {
+				console.log(resp.ok);
+				console.log(resp.status);
+				console.log(resp.text());
+				return resp.json();
+			})
+			.then(data => {
+				setList(data);
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	const deleteAll = () => {
+		fetch(url, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(resp => resp.json())
+			.then(() => setList([]))
+			.then(() => create())
+			.catch(error => console.error("Error: ", error));
+	};
+
+	useEffect(() => {
+		list.length > 0 ? getList() : create();
+	}, []);
+
+	update();
 
 	return (
 		<>
@@ -40,8 +126,8 @@ const Form = () => {
 					{list.map(item => {
 						return (
 							<li key={item.id} className="list-group-item ">
-								<>{item.content}</>
-								<span onClick={() => handleRemove(item.id)}>
+								<>{item.label}</>
+								<span onClick={() => handleRemove(item.label)}>
 									<i className="fas fa-times"></i>
 								</span>
 							</li>
@@ -49,6 +135,8 @@ const Form = () => {
 					})}
 				</ul>
 				<footer>{list.length} item left</footer>
+				<button onClick={() => console.log(list)}>Test</button>
+				<button onClick={deleteAll}>delete</button>
 			</div>
 		</>
 	);
