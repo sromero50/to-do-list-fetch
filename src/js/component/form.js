@@ -110,13 +110,13 @@ const Form = () => {
 
 	return (
 		<>
-			<h1 className="display-4">To do list</h1>
+			<h1 className="display-4">To do list with fetch</h1>
 			<div className="prueba">
 				<form action="" onSubmit={handleSubmit}>
 					<input
 						type="text"
 						placeholder="To Do"
-						className="form-control"
+						className="form-control toDo"
 						value={toDo}
 						onChange={handleOnChange}
 						onKeyPress={handlePressKey}
@@ -134,9 +134,17 @@ const Form = () => {
 						);
 					})}
 				</ul>
-				<footer>{list.length} item left</footer>
-				<button onClick={() => console.log(list)}>Test</button>
-				<button onClick={deleteAll}>delete</button>
+				<footer>
+					{list.length > 1
+						? list.length + " items"
+						: list.length + " item"}{" "}
+					left
+				</footer>
+				<button
+					onClick={deleteAll}
+					className="btn btn-danger w-100 deleteBtn">
+					Delete all
+				</button>
 			</div>
 		</>
 	);
