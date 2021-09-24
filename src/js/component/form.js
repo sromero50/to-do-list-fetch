@@ -16,10 +16,6 @@ const Form = () => {
 	const handleRemove = label => {
 		const newList = list.filter(item => item.label !== label);
 
-		if (list.length === 0) {
-			deleteAll();
-		}
-
 		setList(newList);
 	};
 
